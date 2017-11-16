@@ -30,7 +30,7 @@ microServer.use(function (err, req, res, next) {
 
 //connect to Mongodb
 //localhost
-mongoose.connect('mongodb://localhost/testdb', {
+mongoose.connect('mongodb://localhost/quanlynhansu', {
     useMongoClient: true,
     promiseLibrary: require('bluebird')
 });
