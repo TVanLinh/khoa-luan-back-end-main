@@ -1,0 +1,27 @@
+{
+  "name": "microservices",
+  "version": "1.0.0",
+  "description": "Implement a micro-service server with express, mongodb, bluebird and mongoose",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon ./server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "micro-service"
+  ],
+  "author": "ThapGan",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
+    "busboy": "^0.2.14",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "jsonwebtoken": "^8.1.0",
+    "mongoose": "^4.13.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  }
+}
