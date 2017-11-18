@@ -145,7 +145,16 @@ var infoShema = new mongoose.Schema({
             title: String,
             yearReceive: Number
         }
-    ]
+    ],
+    //qua trinh giang day
+    process_teaching: [{
+        nameSubjects: String,
+        levelEducation: String,
+        credit: Number,
+        organTeaching: String,
+        yearTeaching: Number,
+        languageTeaching: String
+    }]
 });
 
 

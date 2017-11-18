@@ -218,5 +218,22 @@ module.exports = {
     u_get_teachertitle: function (username) {
         // console.log("get_contract " + JSON.stringify(username));
         return Info.findOne({staffCode: username}, "-_id teacher_title");
+    },
+
+    //qua trinh gian day
+    u_post_processteaching: function (data) {
+        console.log("u_post_process_teaching " + JSON.stringify(data));
+        return Info.findOne({staffCode: data["staffCode"]}, function (err, info) {
+            if (info === null) {
+                return Info(data).save();
+            } else {
+                info.process_teaching = data['process_teaching'];
+                return info.save();
+            }
+        });
+    },
+    u_get_processteaching: function (username) {
+        // console.log("get_contract " + JSON.stringify(username));
+        return Info.findOne({staffCode: username}, "-_id process_teaching");
     }
 };
