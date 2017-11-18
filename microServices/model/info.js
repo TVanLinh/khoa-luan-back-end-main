@@ -154,7 +154,84 @@ var infoShema = new mongoose.Schema({
         organTeaching: String,
         yearTeaching: Number,
         languageTeaching: String
-    }]
+    }],
+    //danh hieu thi dua
+    emulation_title: [{
+        title: String,
+        dateLicense: Date,
+        numberDecide: String
+    }],
+    process_foreign: [
+        {
+            dateFrom: Date,
+            dateEnd: Date,
+            national: String,
+            product: String,
+            purpose: String
+        }
+    ],
+    //huong dan luan van luan an
+    thesis_guide: [
+        {
+            namePersonGuide: String,
+            level: String,
+            role: String,
+            thesisName: String,
+            yearGuide: Number,
+            speciesObtain: String
+        }
+    ],
+    //de tai khoa hoc
+    sciene_topic: [{
+        name: String,
+        code: String,
+        dateBegin: Date,
+        monthWork: Number,
+        role: String,
+        level: String,
+        specieObtain: String
+    }],
+    //bai bao
+    newspaper: [{
+        name: String,
+        nameMagazine: String,
+        numberMagazine: String,
+        pagePost: Number,
+        year: Number,
+        numberAuthor: Number,
+        authors: String,
+        location: String
+    }],
+    seminar: [{
+        name: String,
+        nameConvention: String,
+        pagePost: Number,
+        year: Number,
+        numberAuthor: Number,
+        authors: String,
+        location: String
+    }],
+    train: {
+        general: Number,
+        longTime: [{
+            yearFrom: Number,
+            yearEnd: Number,
+            specialized: String,//chuyen nghanh
+            levelLearn: String,//bac hoc
+            academicRank: String,//hoc vi
+            spice: String,//xep loai
+            school: String,
+            national: String
+        }],
+        shortTime: [{
+            dateFrom: Date,
+            numberMonth: Number,
+            certificate: String,
+            placeTrain: String,
+            national: String,
+            description: String
+        }]
+    }
 });
 
 

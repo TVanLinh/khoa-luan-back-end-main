@@ -235,5 +235,129 @@ module.exports = {
     u_get_processteaching: function (username) {
         // console.log("get_contract " + JSON.stringify(username));
         return Info.findOne({staffCode: username}, "-_id process_teaching");
+    },
+
+    //danh hieu thi dua
+    u_post_emulationtitle: function (data) {
+        console.log("u_post_emulation_title " + JSON.stringify(data));
+        return Info.findOne({staffCode: data["staffCode"]}, function (err, info) {
+            if (info === null) {
+                return Info(data).save();
+            } else {
+                info.emulation_title = data['emulation_title'];
+                return info.save();
+            }
+        });
+    },
+    u_get_emulationtitle: function (username) {
+        // console.log("get_contract " + JSON.stringify(username));
+        return Info.findOne({staffCode: username}, "-_id emulation_title");
+    },
+
+    //thong tin di nuoc ngoai
+    u_post_processforeign: function (data) {
+        console.log("u_post_process_foreign " + JSON.stringify(data));
+        return Info.findOne({staffCode: data["staffCode"]}, function (err, info) {
+            if (info === null) {
+                return Info(data).save();
+            } else {
+                info.process_foreign = data['process_foreign'];
+                return info.save();
+            }
+        });
+    },
+    u_get_processforeign: function (username) {
+        // console.log("get_contract " + JSON.stringify(username));
+        return Info.findOne({staffCode: username}, "-_id process_foreign");
+    },
+
+    //luanvan luan an
+    u_post_thesisguide: function (data) {
+        console.log("u_post_thesis_guide " + JSON.stringify(data));
+        return Info.findOne({staffCode: data["staffCode"]}, function (err, info) {
+            if (info === null) {
+                return Info(data).save();
+            } else {
+                info.thesis_guide = data['thesis_guide'];
+                return info.save();
+            }
+        });
+    },
+    //luan
+    u_get_thesisguide: function (username) {
+        // console.log("get_contract " + JSON.stringify(username));
+        return Info.findOne({staffCode: username}, "-_id thesis_guide");
+    },
+
+    //de tai khoa hoc
+    u_post_scienetopic: function (data) {
+        console.log("u_post_sciene_topic " + JSON.stringify(data));
+        return Info.findOne({staffCode: data["staffCode"]}, function (err, info) {
+            if (info === null) {
+                return Info(data).save();
+            } else {
+                info.sciene_topic = data['sciene_topic'];
+                return info.save();
+            }
+        });
+    },
+    //luan
+    u_get_scienetopic: function (username) {
+        // console.log("get_contract " + JSON.stringify(username));
+        return Info.findOne({staffCode: username}, "-_id sciene_topic");
+    },
+
+    //bai bao
+    u_post_newspaper: function (data) {
+        console.log("u_post_newspaper " + JSON.stringify(data));
+        return Info.findOne({staffCode: data["staffCode"]}, function (err, info) {
+            if (info === null) {
+                return Info(data).save();
+            } else {
+                info.newspaper = data['newspaper'];
+                return info.save();
+            }
+        });
+    },
+    //luan
+    u_get_newspaper: function (username) {
+        // console.log("get_contract " + JSON.stringify(username));
+        return Info.findOne({staffCode: username}, "-_id newspaper");
+    },
+
+    //seminar
+    u_post_seminar: function (data) {
+        console.log("u_post_seminar " + JSON.stringify(data));
+        return Info.findOne({staffCode: data["staffCode"]}, function (err, info) {
+            if (info === null) {
+                return Info(data).save();
+            } else {
+                info.seminar = data['seminar'];
+                return info.save();
+            }
+        });
+    },
+    //luan
+    u_get_seminar: function (username) {
+        // console.log("get_contract " + JSON.stringify(username));
+        return Info.findOne({staffCode: username}, "-_id seminar");
+    },
+
+    //qua trinh dao tao
+    u_post_train: function (data) {
+        console.log("u_post_train " + JSON.stringify(data));
+        return Info.findOne({staffCode: data["staffCode"]}, function (err, info) {
+            if (info === null) {
+                return Info(data).save();
+            } else {
+                info.train = data['train'];
+                return info.save();
+            }
+        });
+    }
+    ,
+    u_get_train: function (username) {
+        // console.log("get_contract " + JSON.stringify(username));
+        return Info.findOne({staffCode: username}, "-_id train");
     }
 };
