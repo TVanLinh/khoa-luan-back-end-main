@@ -359,5 +359,41 @@ module.exports = {
     u_get_train: function (username) {
         // console.log("get_contract " + JSON.stringify(username));
         return Info.findOne({staffCode: username}, "-_id train");
+    },
+
+    //qua trinh phat minh sang che
+    u_post_processevent: function (data) {
+        console.log("u_post_process_event " + JSON.stringify(data));
+        return Info.findOne({staffCode: data["staffCode"]}, function (err, info) {
+            if (info === null) {
+                return Info(data).save();
+            } else {
+                info.process_event = data['process_event'];
+                return info.save();
+            }
+        });
+    }
+    ,
+    u_get_processevent: function (username) {
+        // console.log("get_contract " + JSON.stringify(username));
+        return Info.findOne({staffCode: username}, "-_id process_event");
+    },
+
+    //qua trinh phat minh sang che
+    u_post_processpublish: function (data) {
+        console.log("u_post_process_publish " + JSON.stringify(data));
+        return Info.findOne({staffCode: data["staffCode"]}, function (err, info) {
+            if (info === null) {
+                return Info(data).save();
+            } else {
+                info.process_publish = data['process_publish'];
+                return info.save();
+            }
+        });
+    }
+    ,
+    u_get_processpublish: function (username) {
+        // console.log("get_contract " + JSON.stringify(username));
+        return Info.findOne({staffCode: username}, "-_id process_publish");
     }
 };

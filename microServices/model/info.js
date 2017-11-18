@@ -231,7 +231,21 @@ var infoShema = new mongoose.Schema({
             national: String,
             description: String
         }]
+    },
+    process_event: [{
+        name: String,
+        organLicense: String,
+        dateOfIssue: Date,
+        numberAuthor: Number,
+        description: String
+    }],
+    process_publish: [{
+        name: String,
+        year: Number,
+        publishCompany: String,
+        role: String
     }
+    ]
 });
 
 
