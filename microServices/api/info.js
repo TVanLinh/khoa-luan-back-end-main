@@ -153,6 +153,70 @@ module.exports = {
     u_get_infotechnology: function (username) {
         // console.log("get_contract " + JSON.stringify(username));
         return Info.findOne({staffCode: username}, "-_id info_technology");
-    }
+    },
 
+    u_post_bonus: function (data) {
+        console.log("u_post_bonus " + JSON.stringify(data));
+        return Info.findOne({staffCode: data["staffCode"]}, function (err, info) {
+            if (info === null) {
+                return Info(data).save();
+            } else {
+                info.bonus = data['bonus'];
+                return info.save();
+            }
+        });
+    },
+
+    u_get_bonus: function (username) {
+        // console.log("get_contract " + JSON.stringify(username));
+        return Info.findOne({staffCode: username}, "-_id bonus");
+    },
+
+    u_post_discipline: function (data) {
+        console.log("u_post_discipline " + JSON.stringify(data));
+        return Info.findOne({staffCode: data["staffCode"]}, function (err, info) {
+            if (info === null) {
+                return Info(data).save();
+            } else {
+                info.discipline = data['discipline'];
+                return info.save();
+            }
+        });
+    },
+    u_get_discipline: function (username) {
+        // console.log("get_contract " + JSON.stringify(username));
+        return Info.findOne({staffCode: username}, "-_id discipline");
+    },
+
+    u_post_academicrank: function (data) {
+        console.log("u_post_academic_rank " + JSON.stringify(data));
+        return Info.findOne({staffCode: data["staffCode"]}, function (err, info) {
+            if (info === null) {
+                return Info(data).save();
+            } else {
+                info.academic_rank = data['academic_rank'];
+                return info.save();
+            }
+        });
+    },
+    u_get_academicrank: function (username) {
+        // console.log("get_contract " + JSON.stringify(username));
+        return Info.findOne({staffCode: username}, "-_id academic_rank");
+    },
+
+    u_post_teachertitle: function (data) {
+        console.log("u_post_teacher_title " + JSON.stringify(data));
+        return Info.findOne({staffCode: data["staffCode"]}, function (err, info) {
+            if (info === null) {
+                return Info(data).save();
+            } else {
+                info.teacher_title = data['teacher_title'];
+                return info.save();
+            }
+        });
+    },
+    u_get_teachertitle: function (username) {
+        // console.log("get_contract " + JSON.stringify(username));
+        return Info.findOne({staffCode: username}, "-_id teacher_title");
+    }
 };

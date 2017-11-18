@@ -113,7 +113,39 @@ var infoShema = new mongoose.Schema({
     info_technology: [{
         level: String,
         yearLicense: Number
-    }]
+    }],
+    //thong tin khen thuong
+    bonus: [
+        {
+            rankDecide: String,
+            form: String,
+            numberDecide: String,
+            dateDecide: Date,
+            reason: String
+        }
+    ],
+    //thong tin ky luat
+    discipline: [
+        {
+            rankDecide: String,
+            form: String,
+            numberDecide: String,
+            dateDecide: Date,
+            reason: String
+        }
+    ],
+    //thong tin hoc ham
+    academic_rank: [{
+        rank: String,
+        placeReceive: String,
+        yearReceive: Number
+    }],
+    teacher_title: [
+        {
+            title: String,
+            yearReceive: Number
+        }
+    ]
 });
 
 

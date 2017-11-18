@@ -10,12 +10,17 @@ module.exports = {
             select: 'title description'
         }).lean();
     },
+    get_all: function () {
+        return User.find().populate({
+            path: 'roles'
+        });
+    },
     put_index: function(user, reason, username){
         var salt = crypto.randomBytes(128).toString('base64');
         var hashedPassword = crypto.createHmac('sha256', salt).update(user.hashedPass).digest('hex');
         user.salt = salt;
         user.hashedPass = hashedPassword;
-        
+
         return User(user).save().then(u => {
             user._id = u._id;
             user.createdOn = u.createdOn;
@@ -34,7 +39,7 @@ module.exports = {
     post_activate: function(userId, reason, activated, username){
         return User.findById(userId).then(
             user => {
-                user.activated = activated;                
+                user.activated = activated;
                 return user.save();
             }
         ).then(r => {
