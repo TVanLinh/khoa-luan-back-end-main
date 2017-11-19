@@ -245,7 +245,16 @@ var infoShema = new mongoose.Schema({
         publishCompany: String,
         role: String
     }
-    ]
+    ],
+    process_work: [{
+        level1: String,
+        level2: String,
+        now: Boolean,
+        dateFrom: Date,
+        dateEnd: Date,
+        position: String,
+        job: String
+    }]
 });
 
 

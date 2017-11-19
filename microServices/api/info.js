@@ -395,5 +395,23 @@ module.exports = {
     u_get_processpublish: function (username) {
         // console.log("get_contract " + JSON.stringify(username));
         return Info.findOne({staffCode: username}, "-_id process_publish");
+    },
+
+    //qua trinh phat cong tac
+    u_post_processwork: function (data) {
+        console.log("u_post_process_work " + JSON.stringify(data));
+        return Info.findOne({staffCode: data["staffCode"]}, function (err, info) {
+            if (info === null) {
+                return Info(data).save();
+            } else {
+                info.process_work = data['process_work'];
+                return info.save();
+            }
+        });
+    }
+    ,
+    u_get_processwork: function (username) {
+        // console.log("get_contract " + JSON.stringify(username));
+        return Info.findOne({staffCode: username}, "-_id process_work");
     }
 };
