@@ -4,13 +4,12 @@ var rankCatalogShema = new mongoose.Schema({
     name: String,
     group: {
         name: String,
-        rank: [{
-            name: Number,
-            level: [{
+        listRank: [String],
+        level: [
+            {
                 name: String,
                 salary: Number
             }]
-        }]
     }
 });
 
