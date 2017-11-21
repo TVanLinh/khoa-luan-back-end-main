@@ -254,6 +254,16 @@ var infoShema = new mongoose.Schema({
         dateEnd: Date,
         position: String,
         job: String
+    }],
+    salary:[{
+        dateFrom: Date,
+        dateEnd: Date,
+          specie: String,
+          group: String,
+          rank: String,
+          level: String,
+          factorSalary: Number,
+          numberDecide: String
     }]
 });
 
