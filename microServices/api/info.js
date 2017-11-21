@@ -413,5 +413,24 @@ module.exports = {
     u_get_processwork: function (username) {
         // console.log("get_contract " + JSON.stringify(username));
         return Info.findOne({staffCode: username}, "-_id process_work");
+    },
+
+
+     //qua trinh luong
+    u_post_salary: function (data) {
+        console.log("u_post_salary " + JSON.stringify(data));
+        return Info.findOne({staffCode: data["staffCode"]}, function (err, info) {
+            if (info === null) {
+                return Info(data).save();
+            } else {
+                info.salary = data['salary'];
+                return info.save();
+            }
+        });
+    }
+    ,
+    u_get_salary: function (username) {
+        // console.log("get_contract " + JSON.stringify(username));
+        return Info.findOne({staffCode: username}, "-_id salary");
     }
 };
