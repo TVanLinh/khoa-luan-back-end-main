@@ -354,7 +354,7 @@ module.exports = {
                             salary: 3.86
                         },
                         {
-                            name: "10",
+                            name: "11",
                             salary: 4.06
                         }
                     ]
@@ -416,11 +416,11 @@ module.exports = {
                             salary: 3.27
                         },
                         {
-                            name: "10",
+                            name: "11",
                             salary: 3.45
                         },
                         {
-                            name: "10",
+                            name: "12",
                             salary: 3.63
                         }
                     ]
@@ -476,11 +476,11 @@ module.exports = {
                             salary: 3.12
                         },
                         {
-                            name: "10",
+                            name: "11",
                             salary: 3.30
                         },
                         {
-                            name: "10",
+                            name: "12",
                             salary: 3.48
                         }
                     ]
@@ -535,11 +535,11 @@ module.exports = {
                             salary: 2.97
                         },
                         {
-                            name: "10",
+                            name: "11",
                             salary: 3.15
                         },
                         {
-                            name: "10",
+                            name: "12",
                             salary: 3.33
                         }
                     ]
@@ -548,10 +548,10 @@ module.exports = {
         ];
 
         //  CatalogRank.insertMany(a,function(err){
-        //
+        
         // });
         // CatalogRank.remove({}, err => {
-        //
+        
         // });
         return CatalogRank.find();
     }
