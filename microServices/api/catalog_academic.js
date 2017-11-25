@@ -1,6 +1,7 @@
 const CatalogAcademic = require('../model/catalogAcademic');
+var mongoose = require('mongoose');
 module.exports = {
-    get_index: function () {
+    u_get_index: function () {
         var item = [
             {
                 name: "Tú tài"
@@ -37,5 +38,23 @@ module.exports = {
         //
         // });
         return CatalogAcademic.find();
+    }
+    ,
+    u_post_index: function (data) {
+        console.log(JSON.stringify(data));
+        return CatalogAcademic(data).save();
+    },
+
+    u_put_index: function (data) {
+        console.log(data);
+        return CatalogAcademic.findById(data['_id']).then(temp => {
+            temp.name = data['name'];
+            return temp.save();
+        });
+    },
+
+    u_delete_index: function (id) {
+        let temp = ( mongoose.SchemaTypes.ObjectId(id));
+        return CatalogAcademic.findByIdAndRemove(id);
     }
 };
