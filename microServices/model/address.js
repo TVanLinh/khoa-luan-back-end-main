@@ -1,10 +1,17 @@
 var mongoose = require('mongoose');
 
 var addressSchema = new mongoose.Schema({
-    	title: String,
-    	code: Number,
-    	districts: [code: Number, title: String],
-    	guilde: [code: Number, title: String,districtID: Number]
+    city: {
+        name: String,
+        code: Number
+    },
+    districts: [{
+        code: Number, name: String,
+        guids: [{
+            code: Number, name: String
+        }]
+    }
+    ]
 });
 
-module.exports = mongoose.model('Backend', addressSchema);
+module.exports = mongoose.model('Address', addressSchema);
