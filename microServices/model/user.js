@@ -4,11 +4,16 @@ var UserSchema = new mongoose.Schema({
     username: String,
     hashedPass: String,
     salt: String,
-    fullname:String,
+    fullname: String,
     avatarUrl: String,
-    roles: [{type:mongoose.SchemaTypes.ObjectId, ref:'Role'}],
+    organ: {
+        level1: {type:mongoose.SchemaTypes.ObjectId, ref:'CatalogFaculty'},
+        level2: {type:mongoose.SchemaTypes.ObjectId, ref:'CatalogFaculty'}
+    },
+    email: String,
+    roles: [{type: mongoose.SchemaTypes.ObjectId, ref: 'Role'}],
     activated: {type: Boolean, 'default': true},
-    createdOn: { type: Date, 'default': Date.now }
+    createdOn: {type: Date, 'default': Date.now}
 
 });
 

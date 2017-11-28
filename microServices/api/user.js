@@ -3,10 +3,10 @@ const UserHistory = require('../model/userHistory');
 const crypto = require('crypto');
 
 module.exports = {
-    get_index: function(){
+    get_index: function () {
         return User.find().populate({
             path: 'roles',
-            match: { activated: true },
+            match: {activated: true},
             select: 'title description'
         }).lean();
     },
@@ -15,7 +15,15 @@ module.exports = {
             path: 'roles'
         });
     },
-    put_index: function(user, reason, username){
+
+    get_staffcode: function (staffCode) {
+        return User.findOne({username: staffCode}).populate({
+            path: "organ.level1"
+        });
+        // return "Ok";
+    },
+
+    put_index: function (user, reason, username) {
         var salt = crypto.randomBytes(128).toString('base64');
         var hashedPassword = crypto.createHmac('sha256', salt).update(user.hashedPass).digest('hex');
         user.salt = salt;
@@ -36,7 +44,8 @@ module.exports = {
             return user;
         });
     },
-    post_activate: function(userId, reason, activated, username){
+
+    post_activate: function (userId, reason, activated, username) {
         return User.findById(userId).then(
             user => {
                 user.activated = activated;
@@ -45,13 +54,13 @@ module.exports = {
         ).then(r => {
             return UserHistory({
                 userId: r._id,
-                type: activated ? 'activate': 'disable',
+                type: activated ? 'activate' : 'disable',
                 reason: reason,
                 username: username
             }).save();
         });
     },
-    post_assignRole: function(user, reason, username){
+    post_assignRole: function (user, reason, username) {
         return User.findByIdAndUpdate(user._id, user)
             .then(data => {
                 return UserHistory({
@@ -64,5 +73,14 @@ module.exports = {
             .then(log => {
                 return log.userId;
             });
+    },
+    post_index: function (data) {
+        let user = data['data'];
+        console.log(data);
+        // var salt = crypto.randomBytes(128).toString('base64');
+        // var hashedPassword = crypto.createHmac('sha256', salt);
+        // user.hashedPass = hashedPassword;
+        // user.salt = salt;
+        return User(user).save();
     }
 }
