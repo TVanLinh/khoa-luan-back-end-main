@@ -4,6 +4,9 @@ const crypto = require('crypto');
 
 module.exports = {
     get_index: function () {
+        // User.remove({username: '581599'}, function () {
+        //
+        // })
         return User.find().populate({
             path: 'roles',
             match: {activated: true},

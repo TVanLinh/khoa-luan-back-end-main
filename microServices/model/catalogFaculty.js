@@ -3,6 +3,8 @@ var mongoose = require('mongoose');
 var catalogFacultyShema = new mongoose.Schema({
     name: String,
     level: Number,
+    type: String,
+    url: String,
     parent: {
         id: String,
         name: String,

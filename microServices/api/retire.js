@@ -7,8 +7,8 @@ module.exports = {
             path: 'user',
             match: {username: retire['user']['username']}
         }).then(r => {
-            if (r !== null) {
-                console.log("\"Cán bộ này đã được xử lý  rồi\";" + JSON.stringify(r.user.username));
+            if (r.user) {
+                // console.log("\"Cán bộ này đã được xử lý  rồi\";" + JSON.stringify(r.user.username));
                 return JSON.stringify({"message": "Cán bộ này đã được xử lý rồi"});
             }
             return Retire(retire).save();

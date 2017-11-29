@@ -7,10 +7,11 @@ module.exports = {
             path: 'user',
             match: {username: leaveJob['user']['username']}
         }).then(r => {
-            if (r !== null) {
-                console.log("\"Cán bộ này đã được xử lý nghỉ việc rồi\";" + JSON.stringify(r.user.username));
+            if (r.user) {
+                console.log("ok "+r);
                 return JSON.stringify({"message": "Cán bộ này đã được xử lý nghỉ việc rồi"});
             }
+            console.log("ok");
             return LeaveJob(leaveJob).save();
         });
 

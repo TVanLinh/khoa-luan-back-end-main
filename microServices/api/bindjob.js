@@ -7,7 +7,7 @@ module.exports = {
             path: 'user',
             match: {username: bindJob['user']['username']}
         }).then(r => {
-            if (r !== null) {
+            if (r.user) {
                 return JSON.stringify({"message": "Cán bộ này đã được xử lý  rồi"});
             }
             return BindJob(bindJob).save();

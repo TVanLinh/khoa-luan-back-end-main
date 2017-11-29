@@ -7,8 +7,7 @@ module.exports = {
             path: 'user',
             match: {username: leaveOrgan['user']['username']}
         }).then(r => {
-            if (r !== null) {
-                console.log("\"Cán bộ này đã được xử lý  rồi\";" + JSON.stringify(r.user.username));
+            if (r.user) {
                 return JSON.stringify({"message": "Cán bộ này đã được xử lý rồi"});
             }
             return LeaveOrgan(leaveOrgan).save();
