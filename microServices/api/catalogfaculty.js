@@ -15,7 +15,7 @@ module.exports = {
         return CatalogFaculty.find({level: 1});
     },
 
-    post_index: function (data) {
+    u_post_index: function (data) {
         console.log("CatalogFaculty post request:" + JSON.stringify(data));
         let parent = data['parent'];
         if (parent && parent["id"] !== null) {
@@ -30,7 +30,7 @@ module.exports = {
         // console.log(JSON.stringify(data));
         return CatalogFaculty(data).save();
     },
-    put_index: function (data) {
+    u_put_index: function (data) {
         console.log("CatalogFaculty put request:" + JSON.stringify(data));
         let parent = data['parent'];
         if (parent && parent["id"] !== null) {
@@ -56,7 +56,7 @@ module.exports = {
         });
 
     },
-    delete_index: function (id) {
+    u_delete_index: function (id) {
         return CatalogFaculty.deleteOne({_id: id});
     }
 

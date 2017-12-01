@@ -19,12 +19,34 @@ module.exports = {
         });
     },
 
-    get_staffcode: function (staffCode) {
+    u_get_staffcode: function (staffCode) {
         return User.findOne({username: staffCode}).populate({
             path: "organ.level1"
+        }).populate({
+            path: "organ.level2"
         });
         // return "Ok";
     },
+
+    u_get_faculty: function (id) {
+        // console.log(id);
+        let arry = [];
+        return User.find().populate({
+            path: 'organ.level1'
+        }).then(result => {
+            if (Array.isArray(result)) {
+                for (let item of result) {
+                    console.log(item);
+                    if (item.organ != null && item.organ.level1 && item.organ.level1._id == id) {
+                        arry.push(item);
+                    }
+                }
+            }
+            return arry;
+        });
+    }
+    ,
+
 
     put_index: function (user, reason, username) {
         var salt = crypto.randomBytes(128).toString('base64');
@@ -46,7 +68,8 @@ module.exports = {
         }).then(log => {
             return user;
         });
-    },
+    }
+    ,
 
     post_activate: function (userId, reason, activated, username) {
         return User.findById(userId).then(
@@ -62,7 +85,8 @@ module.exports = {
                 username: username
             }).save();
         });
-    },
+    }
+    ,
     post_assignRole: function (user, reason, username) {
         return User.findByIdAndUpdate(user._id, user)
             .then(data => {
@@ -76,8 +100,9 @@ module.exports = {
             .then(log => {
                 return log.userId;
             });
-    },
-    post_index: function (data) {
+    }
+    ,
+    u_post_index: function (data) {
         let user = data['data'];
         console.log(data);
         // var salt = crypto.randomBytes(128).toString('base64');
