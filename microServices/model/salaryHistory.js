@@ -1,13 +1,16 @@
 var mongoose = require('mongoose');
 
-var leaveJobShema = new mongoose.Schema({
+var salaryHistoryShema = new mongoose.Schema({
     numberDecide: String,
     dateDecide: Date,
     contentDecide: String,
-    organ: String,
-    dateLeave: Date,
+    group: String,
+    speice: String,
+    rank: String,
+    level: Number,
+    factor: Number,
     user: {type: mongoose.SchemaTypes.ObjectId, ref: 'User'},
     createdOn:{type: Date, 'default': Date.now }
 });
 
-module.exports = mongoose.model('LeaveJob', leaveJobShema);
+module.exports = mongoose.model('SalaryHistory', salaryHistoryShema);

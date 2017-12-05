@@ -6,7 +6,8 @@ var leaveOrganShema = new mongoose.Schema({
     contentDecide: String,
     dateTransfer: String,
     unitTransfer: String,
-    user: {type: mongoose.SchemaTypes.ObjectId, ref: 'User'}
+    user: {type: mongoose.SchemaTypes.ObjectId, ref: 'User'},
+    createdOn: {type: Date, 'default': Date.now}
 });
 
 module.exports = mongoose.model('LeaveOrgan', leaveOrganShema);

@@ -9,7 +9,8 @@ var leaveDepartShema = new mongoose.Schema({
         level2: String
     },
     dateTransfer: String,
-    user: {type: mongoose.SchemaTypes.ObjectId, ref: 'User'}
+    user: {type: mongoose.SchemaTypes.ObjectId, ref: 'User'},
+    createdOn: {type: Date, 'default': Date.now}
 });
 
 module.exports = mongoose.model('LeaveDepart', leaveDepartShema);
