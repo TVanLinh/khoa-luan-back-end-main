@@ -1,16 +1,24 @@
 const Backend = require('../model/backend');
 
 module.exports = {
-    get_index: function(){
-        return Backend.find().lean();        
+    get_index: function () {
+        return Backend.find().sort({createdOn: -1}).lean();
     },
-    put_index: function(backend) {
-        return Backend(backend).save();        
-    },
-    post_index: function(backend){
+    put_index: function (backend) {
         return Backend.findByIdAndUpdate(backend._id, backend);
     },
-    get_activated: function(){
+    post_index: function (backend) {
+        return Backend(backend).save(function (err, result) {
+            return result;
+        });
+    },
+    get_activated: function () {
         return Backend.find({activated: true}, 'title description').lean();
+    },
+    delete_index: function (id) {
+        console.log("delete backend request id " + id);
+        return Backend.findByIdAndRemove(id, function () {
+
+        });
     }
-}
+};
