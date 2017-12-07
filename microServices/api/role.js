@@ -57,4 +57,4 @@ module.exports = {
     get_activated: function(){
         return Role.find({activated: true}, 'title description').lean();
     }
-}
+};

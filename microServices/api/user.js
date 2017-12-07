@@ -4,7 +4,7 @@ const crypto = require('crypto');
 
 module.exports = {
     get_index: function () {
-        // User.remove({username: '581599'}, function () {
+        // User.remove({username: '5815978'}, function () {
         //
         // })
         return User.find().populate({
@@ -103,12 +103,23 @@ module.exports = {
     }
     ,
     u_post_index: function (data) {
-        let user = data['data'];
-        console.log(data);
-        // var salt = crypto.randomBytes(128).toString('base64');
-        // var hashedPassword = crypto.createHmac('sha256', salt);
-        // user.hashedPass = hashedPassword;
-        // user.salt = salt;
-        return User(user).save();
+        let user = data;
+        // console.log(data);
+
+        User.findOne({username: user.username}).then(r => {
+            if (r && r.username) {
+                return "Mã cán bộ đã tồn tại rồi .!"
+            } else {
+                return User(user).save(function (err, f) {
+                    const salt = crypto.randomBytes(128).toString('base64');
+                    const hashedPassword = crypto.createHmac('sha256', salt).update(user['hashedPass']).digest('hex');
+                    f.salt = salt;
+                    f.hashedPass = hashedPassword;
+                    return f.save();
+                });
+            }
+        });
+
+
     }
-}
+};
