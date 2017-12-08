@@ -5,6 +5,7 @@ var catalogFacultyShema = new mongoose.Schema({
     level: Number,
     type: String,
     url: String,
+    code: String,
     parent: {
         id: String,
         name: String,

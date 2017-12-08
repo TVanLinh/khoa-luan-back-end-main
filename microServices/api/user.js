@@ -19,11 +19,33 @@ module.exports = {
         });
     },
 
+    get_role: function (username) {
+        return User.findOne().populate({
+            path: 'roles'
+        }).select('-_id roles');
+    },
+
     u_get_staffcode: function (staffCode) {
         return User.findOne({username: staffCode}).populate({
             path: "organ.level1"
         }).populate({
             path: "organ.level2"
+        }).populate({
+            path: 'roles',
+            select: 'title description'
+        });
+        // return "Ok";
+    },
+
+    u_get_find: function (query) {
+        let rex = new RegExp('' + query.trim() + "", 'i');
+        return User.find({$or: [{username: rex}, {fullname: rex}]}).populate({
+            path: "organ.level1"
+        }).populate({
+            path: "organ.level2"
+        }).populate({
+            path: 'roles',
+            select: 'title description'
         });
         // return "Ok";
     },

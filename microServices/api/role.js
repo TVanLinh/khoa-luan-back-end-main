@@ -5,13 +5,20 @@ module.exports = {
     get_index: function () {
         return Role.find().populate({
             path: 'frontends',
-            match: { activated: true },
-            select: 'title description'
+            match: {activated: true},
+            // select: 'title description'
         }).populate({
             path: 'backends',
-            match: { activated: true },
-            select: 'title description'
+            match: {activated: true},
+            // select: 'title description'
         }).lean();
+    },
+    post_create: function (role) {
+        Role.find({title: role.title}).then(r => {
+            if (!r) {
+                Role(role).save();
+            }
+        });
     },
     post_index: function (role, reason, username) {
         return Role.findByIdAndUpdate(role._id, role)
@@ -39,22 +46,22 @@ module.exports = {
             return log.roleId;
         });
     },
-    post_activate: function(roleId, reason, activated, username){
+    post_activate: function (roleId, reason, activated, username) {
         return Role.findById(roleId).then(
             role => {
-                role.activated = activated;                
+                role.activated = activated;
                 return role.save();
             }
         ).then(r => {
             return RoleHistory({
                 roleId: r._id,
-                type: activated ? 'activate': 'disable',
+                type: activated ? 'activate' : 'disable',
                 reason: reason,
                 username: username
             }).save();
         });
     },
-    get_activated: function(){
+    get_activated: function () {
         return Role.find({activated: true}, 'title description').lean();
     }
 };

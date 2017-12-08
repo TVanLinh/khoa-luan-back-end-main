@@ -49,7 +49,7 @@ module.exports = {
     },
 
     // quan doi quan ngu dang doan cong  doan
-    u_post_armypug: function (data) {
+    post_armypug: function (data) {
         // console.log(data);
         return Info.findOne({staffCode: data["staffCode"]}, function (err, info) {
             if (info === null) {
@@ -61,7 +61,7 @@ module.exports = {
         });
     },
 
-    u_get_armypug: function (username) {
+    get_armypug: function (username) {
         // console.log(username);
         return Info.findOne({staffCode: username}, "-_id armyPUG");
     },
@@ -167,7 +167,7 @@ module.exports = {
         });
     },
 
-    get_bonus: function (username) {
+    u_get_bonus: function (username) {
         // console.log("get_contract " + JSON.stringify(username));
         return Info.findOne({staffCode: username}, "-_id bonus");
     },
