@@ -13,13 +13,27 @@ module.exports = {
             // select: 'title description'
         }).lean();
     },
-    post_create: function (role) {
-        Role.find({title: role.title}).then(r => {
-            if (!r) {
-                Role(role).save();
-            }
+
+    // post_create: function (role) {
+    //     // console.log(role);
+    //     return Role.find({title: role.title}).then(r => {
+    //         if (r && !r.title) {
+    //             return Role(role).save();
+    //         }
+    //     });
+    //
+    // },
+
+    // post_update: function (role) {
+    //     console.log("update role " + JSON.stringify(role));
+    //     return Role.findByIdAndUpdate(role._id, role);
+    // },
+
+    post_delete: function (role) {
+        return Role.findByIdAndRemove(role._id, function (err) {
         });
     },
+
     post_index: function (role, reason, username) {
         return Role.findByIdAndUpdate(role._id, role)
             .then(data => {
@@ -35,15 +49,15 @@ module.exports = {
             })
     },
     put_index: function (role, reason, username) {
+        console.log("Create role request " + role + "   " + reason + "\t" + username);
         return Role(role).save().then(role => {
-            return RoleHistory({
+            RoleHistory({
                 roleId: role._id,
                 type: 'Created',
                 reason: reason,
                 username: username
             }).save();
-        }).then(log => {
-            return log.roleId;
+            return role;
         });
     },
     post_activate: function (roleId, reason, activated, username) {

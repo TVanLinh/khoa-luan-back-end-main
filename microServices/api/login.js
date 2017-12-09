@@ -13,7 +13,7 @@ module.exports = {
                         if (user) {
                             var hashedPassword = crypto.createHmac('sha256', user.salt).update(password).digest('hex');
                             if (hashedPassword === user.hashedPass) {
-                                token = jwt.sign({ userId: user._id, username: user.username }, secretABCKey, { expiresIn: '2h' });
+                                token = jwt.sign({ userId: user._id, username: user.username }, secretABCKey, { expiresIn: '8h' });
                                 return User.findById(user._id, '-_id username fullname sex birthDay email roles').populate({
                                     path: 'roles',
                                     populate: { path: 'frontends', match: { activated: true }, select: '-_id title url' },

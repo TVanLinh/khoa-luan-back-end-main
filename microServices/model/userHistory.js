@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var UserHistorySchema = new mongoose.Schema({
-    userId: String,
+    userId: {type: mongoose.SchemaTypes.ObjectId,ref:'User'},
     type:String,
     reason: String,    
     username: String,

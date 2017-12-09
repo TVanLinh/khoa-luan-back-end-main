@@ -1,16 +1,17 @@
 const FuncLog = require('../model/funcLog');
 const RoleHistory = require('../model/roleHistory');
+const UserHistory = require('../model/userHistory');
 const Frontend = require('../model/frontend');
 const Backend = require('../model/backend');
 
 module.exports = {
-    get_index: function(){
-        return FuncLog.find().lean();        
+    get_index: function () {
+        return FuncLog.find().lean();
     },
-    put_index: function(log){
+    put_index: function (log) {
         return FuncLog(log).save()
-            .then(l =>{
-                if(log.funcType === 'frontend') return Frontend.findById(l.funcId);
+            .then(l => {
+                if (log.funcType === 'frontend') return Frontend.findById(l.funcId);
                 else return Backend.findById(l.funcId);
             })
             .then(f => {
@@ -18,7 +19,21 @@ module.exports = {
                 return f.save();
             });
     },
-    get_roleHistory: function(log){
-        return RoleHistory.find().lean();
+    get_userHistory: function (log) {
+        // RoleHistory.remove({},function (err) {
+        //
+        // });
+        return UserHistory.find().populate({
+            path: 'userId'
+        }).lean();
+    },
+
+    get_roleHistory: function (log) {
+        // RoleHistory.remove({},function (err) {
+        //
+        // });
+        return RoleHistory.find().populate({
+            path: 'roleId'
+        }).lean();
     }
-}
+};

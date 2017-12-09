@@ -37,7 +37,7 @@ module.exports = {
         // return "Ok";
     },
 
-    u_get_find: function (query) {
+    get_find: function (query) {
         let rex = new RegExp('' + query.trim() + "", 'i');
         return User.find({$or: [{username: rex}, {fullname: rex}]}).populate({
             path: "organ.level1"
@@ -68,7 +68,6 @@ module.exports = {
         });
     }
     ,
-
 
     put_index: function (user, reason, username) {
         var salt = crypto.randomBytes(128).toString('base64');
@@ -107,11 +106,13 @@ module.exports = {
                 username: username
             }).save();
         });
-    }
-    ,
+    },
+
     post_assignRole: function (user, reason, username) {
+        console.log("assignRole request ");
         return User.findByIdAndUpdate(user._id, user)
             .then(data => {
+                console.log(data);
                 return UserHistory({
                     userId: user._id,
                     type: 'Update Roles',
@@ -120,6 +121,7 @@ module.exports = {
                 }).save();
             })
             .then(log => {
+                console.log("log " + log.userId);
                 return log.userId;
             });
     }

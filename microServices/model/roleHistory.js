@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var RoleHistorySchema = new mongoose.Schema({
-    roleId: String,
+    roleId: {type: mongoose.SchemaTypes.ObjectId,ref:'Role'},
     type:String,
     reason: String,    
     username: String,
