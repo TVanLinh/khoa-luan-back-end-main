@@ -4,9 +4,9 @@ const crypto = require('crypto');
 
 module.exports = {
     get_index: function () {
-        // User.remove({username: '5815978'}, function () {
+        // User.remove({}, function () {
         //
-        // })
+        // });
         return User.find().populate({
             path: 'roles',
             match: {activated: true},
@@ -70,19 +70,15 @@ module.exports = {
     ,
 
     put_index: function (user, reason, username) {
-        var salt = crypto.randomBytes(128).toString('base64');
-        var hashedPassword = crypto.createHmac('sha256', salt).update(user.hashedPass).digest('hex');
+        const salt = crypto.randomBytes(128).toString('base64');
+        const hashedPassword = crypto.createHmac('sha256', salt).update(user['hashedPass']).digest('hex');
         user.salt = salt;
         user.hashedPass = hashedPassword;
 
-        return User(user).save().then(u => {
-            user._id = u._id;
-            user.createdOn = u.createdOn;
-            user.activated = u.activated;
-
+        return User.findByIdAndUpdate(user._id, user).then(u => {
             return UserHistory({
                 roleId: u._id,
-                type: 'Created',
+                type: 'Update',
                 reason: reason,
                 username: username
             }).save();
@@ -126,24 +122,67 @@ module.exports = {
             });
     }
     ,
-    u_post_index: function (data) {
+    post_index: function (data) {
         let user = data;
-        // console.log(data);
+        let temp = null;
+        let array = [];
+        return User.find({}).populate({
+            path: 'organ.level1'
+        }).populate({
+            path: 'organ.level2'
+        }).sort({index: -1}).then(result => {
+            array = result;
 
-        User.findOne({username: user.username}).then(r => {
-            if (r && r.username) {
-                return "Mã cán bộ đã tồn tại rồi .!"
-            } else {
-                return User(user).save(function (err, f) {
-                    const salt = crypto.randomBytes(128).toString('base64');
-                    const hashedPassword = crypto.createHmac('sha256', salt).update(user['hashedPass']).digest('hex');
-                    f.salt = salt;
-                    f.hashedPass = hashedPassword;
-                    return f.save();
-                });
+            if (Array.isArray(array)) {
+                if (data['organ'].level2) {
+                    temp = array.filter(item => item.organ && item.organ.level1 && item.organ.level1.code == data.organ.level1.code && item.organ.level2 && item.organ.level2.code == data.organ.level2.code)[0];
+                    if (!temp || !temp.username) {
+                        user['username'] = user.organ.level2.code + "01";
+                        user.index = 1;
+                    } else {
+                        if (temp.index >= 9) {
+                            user['username'] = user.organ.level2.code + "" + (temp.index + 1);
+                        } else {
+                            user['username'] = user.organ.level2.code + "0" + (temp.index + 1);
+                        }
+                        user.index = (temp.index + 1);
+                    }
+                    console.log("hast level2 " + JSON.stringify(data));
+                    return User(user).save(function (err, f) {
+                        const salt = crypto.randomBytes(128).toString('base64');
+                        const hashedPassword = crypto.createHmac('sha256', salt).update(user['hashedPass']).digest('hex');
+                        f.salt = salt;
+                        f.hashedPass = hashedPassword;
+                        return f.save();
+                    });
+
+                } else {
+                    console.log("not level2");
+                    temp = array.filter(item => item.organ && item.organ.level1 && item.organ.level1.code == data.organ.level1.code)[0];
+                    if (!temp || !temp.username) {
+                        user['username'] = user.organ.level1.code + "01";
+                        user.index = 1;
+                    } else {
+                        if (temp.index >= 9) {
+                            user['username'] = user.organ.level1.code + "" + (temp.index + 1);
+                        } else {
+                            user['username'] = user.organ.level1.code + "0" + (temp.index + 1);
+                        }
+                        user.index = (temp.index + 1);
+                    }
+                    return User(user).save(function (err, f) {
+                        const salt = crypto.randomBytes(128).toString('base64');
+                        const hashedPassword = crypto.createHmac('sha256', salt).update(user['hashedPass']).digest('hex');
+                        f.salt = salt;
+                        f.hashedPass = hashedPassword;
+                        return f.save();
+                    });
+                }
             }
         });
 
-
+        return temp;
     }
+
+
 };

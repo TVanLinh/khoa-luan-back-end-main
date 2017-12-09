@@ -3,6 +3,9 @@ module.exports = {
 
 
     get_index: function () {
+        // Info.remove({}, function () {
+        //
+        // });
         var cv = new Info({
             username: "Tran Van Linh",
             cv: {

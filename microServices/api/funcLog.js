@@ -20,7 +20,7 @@ module.exports = {
             });
     },
     get_userHistory: function (log) {
-        // RoleHistory.remove({},function (err) {
+        // UserHistory.remove({},function (err) {
         //
         // });
         return UserHistory.find().populate({
