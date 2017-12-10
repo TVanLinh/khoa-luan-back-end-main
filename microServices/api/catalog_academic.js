@@ -1,7 +1,7 @@
 const CatalogAcademic = require('../model/catalogAcademic');
 var mongoose = require('mongoose');
 module.exports = {
-    u_get_index: function () {
+    get_index: function () {
         var item = [
             {
                 name: "Tú tài"

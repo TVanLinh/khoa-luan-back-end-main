@@ -12,6 +12,12 @@ var addressSchema = new mongoose.Schema({
         }]
     }
     ]
+    // Province: String,
+    // Province_Code: Number,
+    // District: String,
+    // District_Code: Number,
+    // Commune: String,
+    // Commune_Code: String
 });
 
 module.exports = mongoose.model('Address', addressSchema);
