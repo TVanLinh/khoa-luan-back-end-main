@@ -548,7 +548,7 @@ module.exports = {
         ];
 
         //  CatalogRank.insertMany(a,function(err){
-        
+        //
         // });
         // CatalogRank.remove({}, err => {
         

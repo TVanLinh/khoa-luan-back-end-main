@@ -182,6 +182,26 @@ module.exports = {
         });
 
         return temp;
+    },
+    get_hashfrontend: function (username, url) {
+        return User.findOne({username: username}).populate({
+            path: 'roles',
+            populate: {
+                path: 'frontends',
+                match: {url: url, activated: true}
+            }
+        }).then(user => {
+            if (user && user.username) {
+                for (let item of user.roles) {
+                    for (let fr of item.frontends) {
+                        if (fr.url == url && fr.activated == true) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        });
     }
 
 

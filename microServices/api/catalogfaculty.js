@@ -4,10 +4,10 @@ const CatalogFaculty = require("../model/catalogFaculty");
 module.exports = {
     get_index: function () {
         // return CatalogFaculty.deleteMany({level: 2});
-        CatalogFaculty.findById("5a105ef7d52d014463ea76ce").then(cata => {
-            cata.type = "khoa";
-            return cata.save();
-        });
+        // CatalogFaculty.findById("5a105ef7d52d014463ea76ce").then(cata => {
+        //     cata.type = "khoa";
+        //     return cata.save();
+        // });
         return CatalogFaculty.find();
     },
 
