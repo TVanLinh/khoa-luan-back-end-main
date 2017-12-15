@@ -1,7 +1,6 @@
 const Info = require('../model/info');
 module.exports = {
 
-
     get_index: function () {
         // Info.remove({}, function () {
         //
@@ -30,8 +29,9 @@ module.exports = {
         // });
         return Info.find();
     },
-
-
+    get_avartar: function (username) {
+        return Info.findOne({staffCode: username}, "-_id cv.avatarUrl");
+    },
     //---so yeu li lich -------------------------------
     u_get_cv: function (username) {
         // console.log(username);
@@ -52,7 +52,7 @@ module.exports = {
     },
 
     // quan doi quan ngu dang doan cong  doan
-    post_armypug: function (data) {
+    u_post_armypug: function (data) {
         // console.log(data);
         return Info.findOne({staffCode: data["staffCode"]}, function (err, info) {
             if (info === null) {
@@ -64,11 +64,21 @@ module.exports = {
         });
     },
 
-    get_armypug: function (username) {
+    u_get_armypug: function (username) {
         // console.log(username);
         return Info.findOne({staffCode: username}, "-_id armyPUG");
     },
     //------------------------------------------------
+    put_cvaccept: function (username) {
+        console.log("access ok" + username);
+        Info.findOne({staffCode: username}).then(cv => {
+            if (cv) {
+                cv.accept = true;
+                cv.save();
+                console.log("access ok");
+            }
+        });
+    },
 
     //quan he gia dinh
     u_post_family: function (data) {

@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 //create Schema
 var infoShema = new mongoose.Schema({
+    accept: {type: Boolean, default: true},
     staffCode: String,
     cv: {
         fullName: String,

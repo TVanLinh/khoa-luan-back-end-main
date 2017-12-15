@@ -17,9 +17,9 @@ module.exports = {
 
     },
     get_index: function () {
-        // LeaveJob.remove({},function () {
-        //
-        // });
+        LeaveJob.remove({},function () {
+
+        });
         return LeaveJob.find().populate({
             path: 'user'
         }).lean();

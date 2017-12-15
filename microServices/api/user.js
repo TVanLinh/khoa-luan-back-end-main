@@ -1,11 +1,12 @@
 const User = require('../model/user');
 const UserHistory = require('../model/userHistory');
 const crypto = require('crypto');
-
+var mongoose = require('mongoose');
+var ObjectId = mongoose.SchemaTypes.ObjectId;
 module.exports = {
     get_index: function () {
-        // User.remove({}, function () {
-        //
+        // User.remove({username: 'appAdmin'}, function (err) {
+        //     console.log("delete user");
         // });
         return User.find().populate({
             path: 'roles',
@@ -37,6 +38,7 @@ module.exports = {
         // return "Ok";
     },
 
+
     get_find: function (query) {
         let rex = new RegExp('' + query.trim() + "", 'i');
         return User.find({$or: [{username: rex}, {fullname: rex}]}).populate({
@@ -48,6 +50,70 @@ module.exports = {
             select: 'title description'
         });
         // return "Ok";
+    },
+
+    get_findByUserNameOrFullName: function (username) {
+
+        if (!username) {
+            return;
+        }
+        let rex = new RegExp('' + username.trim() + "", 'i');
+        return User.find({$or: [{username: rex}, {fullname: rex}]}).populate({
+            path: "organ.level1"
+        }).populate({
+            path: "organ.level2"
+        }).populate({
+            path: 'roles',
+            select: 'title description'
+        });
+    },
+
+    get_findByOrgan: function (level1, level2) {
+        return User.find().populate({
+            path: "organ.level1"
+        }).populate({
+            path: "organ.level2"
+        }).populate({
+            path: 'roles',
+            select: 'title description'
+        }).then(arr => {
+            if (Array.isArray(arr)) {
+                if (level1 && level2) {
+                    return arr.filter(item => item.organ && item.organ.level1 && item.organ.level1._id == level1 && item.organ.level2 && item.organ.level2._id == level2);
+
+                } else if (level1) {
+                    return arr.filter(item => item.organ && item.organ.level1 && item.organ.level1._id == level1);
+                }
+            }
+            return [];
+        });
+    },
+
+    get_findByUserNameAndOrgan: function (username, level1, level2) {
+        let rex = new RegExp('' + username.trim() + "", 'i');
+        return User.find(
+            {
+                $or: [{username: rex}, {fullname: rex}]
+            }).populate({
+            path: "organ.level1"
+        }).populate({
+            path: "organ.level2"
+        }).populate({
+            path: 'roles',
+            select: 'title description'
+        }).then((arr) => {
+            if (Array.isArray(arr)) {
+                if (level1 && level2) {
+                  console.log("ok level2");
+                    return arr.filter(item => item.organ && item.organ.level1 && item.organ.level1._id == level1 && item.organ.level2 && item.organ.level2._id == level2);
+
+                } else if (level1) {
+                    return arr.filter(item => item.organ && item.organ.level1 && item.organ.level1._id == level1);
+                }
+            }
+            return [];
+        });
+
     },
 
     u_get_faculty: function (id) {
