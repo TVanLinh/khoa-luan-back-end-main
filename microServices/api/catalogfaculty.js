@@ -1,5 +1,10 @@
 const Nation = require('../model/nation');
 const CatalogFaculty = require("../model/catalogFaculty");
+const User = require("../model/user");
+const UserHistorry = require("../model/userHistory");
+const Role = require("../model/role");
+const leveDepart = require("../model/leaveDepart");
+const leveOrgan = require("../model/leaveOrgan");
 
 module.exports = {
     get_index: function () {
@@ -59,6 +64,4 @@ module.exports = {
     u_delete_index: function (id) {
         return CatalogFaculty.deleteOne({_id: id});
     }
-
-
 };

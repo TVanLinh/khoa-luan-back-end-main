@@ -24,6 +24,10 @@ module.exports = {
             path: 'roles',
             match: {activated: true},
             select: 'title description'
+        }).populate({
+            path: 'organ.level1'
+        }).populate({
+            path: 'organ.level2'
         }).lean();
     },
     get_all: function () {
@@ -81,7 +85,7 @@ module.exports = {
     },
 
     u_get_findByOrgan: function (level1, level2) {
-        return User.find().populate({
+        return User.find({username: {$ne: null}}).populate({
             path: "organ.level1"
         }).populate({
             path: "organ.level2"
@@ -211,40 +215,33 @@ module.exports = {
             array = result;
 
             if (Array.isArray(array)) {
+                console.log("hash level2 ");
                 if (data['organ'].level2) {
                     temp = array.filter(item => item.organ && item.organ.level1 && item.organ.level1.code == data.organ.level1.code && item.organ.level2 && item.organ.level2.code == data.organ.level2.code)[0];
-                    if (!temp || !temp.username) {
+                    let isLesthan1 = true;
+                    if (!temp) {
                         user['username'] = user.organ.level2.code + "01";
                         user.index = 1;
                     } else {
+                        let index = temp.index + 1;
+                        //console.log("exist user " + user.username);
                         if (temp.index >= 9) {
-                            user['username'] = user.organ.level2.code + "" + (temp.index + 1);
+                            user['username'] = user.organ.level2.code + "" + (index);
                         } else {
-                            user['username'] = user.organ.level2.code + "0" + (temp.index + 1);
+                            user['username'] = user.organ.level2.code + "0" + (index);
                         }
-                        user.index = (temp.index + 1);
+                        user.index = (index);
                     }
-                    console.log("hast level2 " + JSON.stringify(data));
-                    return User(user).save(function (err, f) {
-                        const salt = crypto.randomBytes(128).toString('base64');
-                        const hashedPassword = crypto.createHmac('sha256', salt).update(user['hashedPass']).digest('hex');
-                        f.salt = salt;
-                        f.hashedPass = hashedPassword;
-                        return f.save();
-                    }).then(user => {
-                        return Role.findOne({title: 'MyCV'}).then(role => {
-                            if (role) {
-                                user.roles = [];
-                                user.roles.push(role);
-                                return user.save();
-                            }
-                        });
-                    })
+
+
+                    return userService.createUser(user);
+                    // });
+
 
                 } else {
                     console.log("not level2");
                     temp = array.filter(item => item.organ && item.organ.level1 && item.organ.level1.code == data.organ.level1.code)[0];
-                    if (!temp || !temp.username) {
+                    if (!temp) {
                         user['username'] = user.organ.level1.code + "01";
                         user.index = 1;
                     } else {
@@ -255,21 +252,10 @@ module.exports = {
                         }
                         user.index = (temp.index + 1);
                     }
-                    return User(user).save(function (err, f) {
-                        const salt = crypto.randomBytes(128).toString('base64');
-                        const hashedPassword = crypto.createHmac('sha256', salt).update(user['hashedPass']).digest('hex');
-                        f.salt = salt;
-                        f.hashedPass = hashedPassword;
-                        return f.save();
-                    }).then(user => {
-                        return Role.findOne({title: 'MyCV'}).then(role => {
-                            if (role) {
-                                user.roles = [];
-                                user.roles.push(role);
-                                return user.save();
-                            }
-                        });
-                    });
+
+                    return userService.createUser(user);
+                    // });
+
                 }
             }
         });
@@ -322,7 +308,6 @@ module.exports = {
                     }
                 }
 
-
             });
         } else {
             return {
@@ -367,6 +352,29 @@ module.exports = {
             }
         });
 
+
+    }
+};
+
+
+var userService = {
+    createUser: function (user) {
+        console.log("ok" + JSON.stringify(user));
+        return User(user).save(function (err, f) {
+            const salt = crypto.randomBytes(128).toString('base64');
+            const hashedPassword = crypto.createHmac('sha256', salt).update(user['hashedPass']).digest('hex');
+            f.salt = salt;
+            f.hashedPass = hashedPassword;
+            return f.save();
+        }).then(user => {
+            return Role.findOne({title: 'MyCV'}).then(role => {
+                if (role) {
+                    user.roles = [];
+                    user.roles.push(role);
+                    return user.save();
+                }
+            });
+        });
 
     }
 };
