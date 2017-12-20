@@ -354,6 +354,26 @@ module.exports = {
 
 
     }
+
+    , get_birthDayAndOrgan: function (quater, organ) {
+        console.log(quater + organ);
+        return User.find({username: {$ne: null}}).populate({
+            path: 'organ.level1'
+        }).then(array => {
+            // console.log(array);
+            if (quater && organ) {
+                let listTemp = array.filter(item => item.organ && item.organ.level1 && item.organ.level1.code == organ);
+                return getUserByQuarter(listTemp, quater);
+            } else if (quater) {
+                // console.log("ok");
+                return getUserByQuarter(array, quater);
+            }
+        });
+
+    },
+
+
+
 };
 
 
@@ -378,3 +398,56 @@ var userService = {
 
     }
 };
+
+
+var getUserByQuarter = function (arr, quater) {
+    console.log(quater);
+    if (!Array.isArray(arr)) {
+        return [];
+    }
+
+    let result = [];
+    switch (quater) {
+        case "1": {
+            for (let item of arr) {
+                if (item.birthDay && item.birthDay.getMonth() <= 2) {
+                    result.push(item);
+                }
+            }
+            return result;
+        }
+
+        case "2": {
+            for (let item of arr) {
+                if (item.birthDay && item.birthDay.getMonth() > 2 && item.birthDay.getMonth() <= 5) {
+                    result.push(item);
+                }
+            }
+            return result;
+        }
+
+        case "3": {
+            for (let item of arr) {
+                // console.log(item.getMonth());
+                if (item.birthDay && item.birthDay.getMonth() > 5 && item.birthDay.getMonth() <= 8) {
+                    result.push(item);
+                }
+            }
+            return result;
+        }
+        case "4": {
+            console.log(arr);
+            for (let item of arr) {
+                // console.log(result+"  jkfdkfd " +item.getMonth());
+                if (item.birthDay && item.birthDay.getMonth() > 8 && item.birthDay.getMonth() <= 11) {
+                    result.push(item);
+                }
+            }
+            return result;
+        }
+        default:
+            return [];
+    }
+
+};
+

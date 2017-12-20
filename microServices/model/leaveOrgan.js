@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
 
 var leaveOrganShema = new mongoose.Schema({
-    numberDecide: String,
+    numberDecide: {type: String, trim: true},
     dateDecide: Date,
-    contentDecide: String,
-    dateTransfer: String,
+    contentDecide: {type: String,trim: true},
+    dateTransfer: Date,
     unitTransfer: String,
     user: {type: mongoose.SchemaTypes.ObjectId, ref: 'User'},
     createdOn: {type: Date, 'default': Date.now}

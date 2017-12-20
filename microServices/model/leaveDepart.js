@@ -3,12 +3,12 @@ var mongoose = require('mongoose');
 var leaveDepartShema = new mongoose.Schema({
     numberDecide: String,
     dateDecide: Date,
-    contentDecide: String,
+    contentDecide: {type: String, trim: true},
     unitTransfer: {
         level1: String,
         level2: String
     },
-    dateTransfer: String,
+    dateTransfer: Date,
     user: {type: mongoose.SchemaTypes.ObjectId, ref: 'User'},
     createdOn: {type: Date, 'default': Date.now}
 });

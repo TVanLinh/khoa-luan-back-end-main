@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 
 var FrontendSchema = new mongoose.Schema({
-    title: String,
-    url:String,
-    description: String,
+    title: {type: String, trim: true},
+    url:{type: String, trim: true},
+    description: {type: String, trim: true},
     activated: Boolean,
     author: String,
     createdOn: { type: Date, 'default': Date.now }
