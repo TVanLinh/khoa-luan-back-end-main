@@ -4,26 +4,45 @@ module.exports = {
     post_index: function (data) {
         let retire = data;
         console.log("retire request" + JSON.stringify(data));
-        Retire.findOne().populate({
+       return Retire.findOne({user: data.user._id}).populate({
             path: 'user',
             match: {username: retire['user']['username']}
         }).then(r => {
-            if (r.user) {
+            if (r && r.user) {
                 // console.log("\"Cán bộ này đã được xử lý  rồi\";" + JSON.stringify(r.user.username));
-                return JSON.stringify({"message": "Cán bộ này đã được xử lý rồi"});
+                return {msg: "Cán bộ này đã được xử lý nghỉ việc rồi"};
             }
-            return Retire(retire).save();
+            return Retire(retire).save().then(r => {
+                User.findById(data.user._id).then(user => {
+                    if (user) {
+                        user.activated = false;
+                        user.save();
+                    }
+                });
+                return r;
+            });
         });
 
     },
     get_index: function () {
-        // Retire.remove({},function () {
+        // Retire.remove({}, function () {
         //
         // });
         return Retire.find().populate({
-            path: 'user'
+            path: 'user',
+            populate: [{path: 'organ.level1'}, {path: 'organ.level2'}]
         }).lean();
     },
+    put_index: function (data) {
+        return Retire.findByIdAndUpdate(data._id, data);
+    },
+    delete_index: function (data) {
+        return Retire.findByIdAndRemove(data._id, function () {
+            return {msg: "ok"};
+        });
+    },
+
+
     get_new: function (month, year) {
         if (!Number.parseInt(month) || !Number.parseInt(year)) {
             console.log("month or year not valid ");

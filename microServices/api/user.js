@@ -1,6 +1,7 @@
 const User = require('../model/user');
 const Role = require('../model/role');
 const UserHistory = require('../model/userHistory');
+
 const crypto = require('crypto');
 var mongoose = require('mongoose');
 var nodemailer = require('nodemailer');
@@ -13,6 +14,8 @@ var transporter = nodemailer.createTransport({
         pass: 'knbcdsfinhmuqakv'
     }
 });
+
+
 
 
 module.exports = {

@@ -6,6 +6,7 @@ const leveOrgan = require("../model/leaveOrgan");
 const bindJob = require("../model/bindJob");
 const leaveJob = require("../model/leaveJob");
 const Info = require("../model/info");
+const Retire = require("../model/retire");
 
 module.exports = {
     get_index: function () {
@@ -15,13 +16,13 @@ module.exports = {
         // UserHistorry.remove({}, function (err) {
         //
         // });
-        // leveOrgan.remove({}, function (err) {
-        //
-        // });
+        leaveJob.remove({}, function (err) {
+
+        });
         bindJob.remove({}, function (err) {
 
         });
-        leaveJob.remove({}, function (err) {
+        Retire.remove({}, function (err) {
 
         });
         // return leveDepart.remove({},function (err) {
