@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var nationShema = new mongoose.Schema({
-    code: String,
+    code: Number,
     name: String
 });
 

@@ -37,16 +37,16 @@ module.exports = {
         // CatalogAcademic.remove({},function (err) {
         //
         // });
-        return CatalogAcademic.find();
+        return CatalogAcademic.find().sort({name: 1});
     }
     ,
     u_post_index: function (data) {
-        console.log(JSON.stringify(data));
+        // console.log(JSON.stringify(data));
         return CatalogAcademic(data).save();
     },
 
     u_put_index: function (data) {
-        console.log(data);
+        // console.log(data);
         return CatalogAcademic.findById(data['_id']).then(temp => {
             temp.name = data['name'];
             return temp.save();
@@ -54,7 +54,8 @@ module.exports = {
     },
 
     u_delete_index: function (id) {
-        let temp = ( mongoose.SchemaTypes.ObjectId(id));
+        console.log(id);
+        // let temp = ( mongoose.SchemaTypes.ObjectId(id));
         return CatalogAcademic.findByIdAndRemove(id);
     }
 };

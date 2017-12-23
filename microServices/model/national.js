@@ -1,9 +1,8 @@
 var mongoose = require('mongoose');
 
 var nationalShema = new mongoose.Schema({
-    code: String,
-    name: String,
-    nativeName: String
+    code: Number,
+    name: String
 });
 
 module.exports = mongoose.model('National', nationalShema);
