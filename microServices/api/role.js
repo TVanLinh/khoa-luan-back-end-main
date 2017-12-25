@@ -2,7 +2,7 @@ const Role = require('../model/role');
 const RoleHistory = require('../model/roleHistory');
 
 module.exports = {
-    get_index: function () {
+    u_get_index: function () {
         return Role.find().populate({
             path: 'frontends',
             match: {activated: true},
@@ -29,12 +29,12 @@ module.exports = {
     //     return Role.findByIdAndUpdate(role._id, role);
     // },
 
-    post_delete: function (role) {
+    u_post_delete: function (role) {
         return Role.findByIdAndRemove(role._id, function (err) {
         });
     },
 
-    post_index: function (role, reason, username) {
+    u_post_index: function (role, reason, username) {
         return Role.findByIdAndUpdate(role._id, role)
             .then(data => {
                 return RoleHistory({
@@ -48,7 +48,7 @@ module.exports = {
                 return log.roleId;
             })
     },
-    put_index: function (role, reason, username) {
+    u_put_index: function (role, reason, username) {
         console.log("Create role request " + role + "   " + reason + "\t" + username);
         return Role(role).save().then(role => {
             RoleHistory({
@@ -60,7 +60,7 @@ module.exports = {
             return role;
         });
     },
-    post_activate: function (roleId, reason, activated, username) {
+    u_post_activate: function (roleId, reason, activated, username) {
         return Role.findById(roleId).then(
             role => {
                 role.activated = activated;
@@ -75,7 +75,7 @@ module.exports = {
             }).save();
         });
     },
-    get_activated: function () {
+    u_get_activated: function () {
         return Role.find({activated: true}, 'title description').lean();
     }
 };

@@ -2,7 +2,7 @@ const BindJob = require('../model/bindJob');
 const User = require('../model/user');
 module.exports = {
 
-    post_index: function (data) {
+    u_post_index: function (data) {
         let bindJob = data;
         // console.log("leave-job request" + JSON.stringify(data));
         return BindJob.findOne({user: data.user._id}).populate({
@@ -25,7 +25,7 @@ module.exports = {
         });
 
     },
-    get_index: function () {
+    u_get_index: function () {
         // BindJob.remove({}, function () {
         //
         // });
@@ -34,10 +34,10 @@ module.exports = {
             populate: [{path: 'organ.level1'}, {path: 'organ.level2'}]
         }).lean();
     },
-    put_index: function (data) {
+    u_put_index: function (data) {
         return BindJob.findByIdAndUpdate(data._id, data);
     },
-    delete_index: function (data) {
+    u_delete_index: function (data) {
         return BindJob.findByIdAndRemove(data._id, function () {
             return {msg: "ok"};
         });

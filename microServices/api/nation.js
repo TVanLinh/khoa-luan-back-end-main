@@ -19,7 +19,7 @@ module.exports = {
             {"name": "Chăm", "code": 16},
             {"name": "Sán Dìu", "code": 17},
             {"name": "Ra Glai", "code": 18},
-            {"name": "X’Tiêng\t", "code": 19},
+            {"name": "X’Tiêng", "code": 19},
             {"name": "Bru-Vân Kiều", "code": 20},
             {"name": "Khơ Mú", "code": 21},
             {"name": "Giáy", "code": 22},

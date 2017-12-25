@@ -2,7 +2,7 @@ const LeaveDepart = require('../model/leaveDepart');
 const User = require('../model/user');
 const Info = require('../model/info');
 module.exports = {
-    post_index: function (data) {
+    u_post_index: function (data) {
 
         console.log(data);
         let temp = {};
@@ -101,7 +101,7 @@ module.exports = {
         });
 
     },
-    get_index: function () {
+    u_get_index: function () {
         // LeaveDepart.remove({},function () {
         //
         // });

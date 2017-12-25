@@ -3,7 +3,7 @@ const LeaveJob = require('../model/leaveJob');
 const BindJob = require('../model/bindJob');
 
 module.exports = {
-    get_index: function () {
+    u_get_index: function () {
         let result = [];
         return LeaveJob.find({}).populate({
             path: 'user',

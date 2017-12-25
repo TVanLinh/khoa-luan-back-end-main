@@ -19,7 +19,7 @@ var transporter = nodemailer.createTransport({
 
 
 module.exports = {
-    get_index: function () {
+    u_get_index: function () {
         // User.remove({username: 'appAdmin'}, function (err) {
         //     console.log("delete user");
         // });
@@ -33,7 +33,7 @@ module.exports = {
             path: 'organ.level2'
         }).lean();
     },
-    get_all: function () {
+    u_get_all: function () {
         return User.find().populate({
             path: 'roles'
         });
@@ -206,7 +206,7 @@ module.exports = {
             });
     }
     ,
-    post_index: function (data) {
+    u_post_index: function (data) {
         let user = data;
         let temp = null;
         let array = [];
@@ -358,7 +358,7 @@ module.exports = {
 
     }
 
-    , get_birthDayAndOrgan: function (quater, organ) {
+    , u_get_birthDayAndOrgan: function (quater, organ) {
         console.log(quater + organ);
         return User.find({username: {$ne: null}}).populate({
             path: 'organ.level1'

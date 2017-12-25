@@ -1,6 +1,6 @@
 const LeaveOrgan = require('../model/leaveOrgan');
 module.exports = {
-    post_index: function (data) {
+    u_post_index: function (data) {
         let leaveOrgan = data;
         console.log("leave-organ request" + JSON.stringify(data));
         LeaveOrgan.findOne().populate({
@@ -14,7 +14,7 @@ module.exports = {
         });
 
     },
-    get_index: function () {
+    u_get_index: function () {
         // LeaveOrgan.remove({},function () {
         //
         // });

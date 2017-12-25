@@ -1,7 +1,7 @@
 const Retire = require('../model/retire');
 const User = require('../model/user');
 module.exports = {
-    post_index: function (data) {
+    u_post_index: function (data) {
         let retire = data;
         console.log("retire request" + JSON.stringify(data));
        return Retire.findOne({user: data.user._id}).populate({
@@ -24,7 +24,7 @@ module.exports = {
         });
 
     },
-    get_index: function () {
+    u_get_index: function () {
         // Retire.remove({}, function () {
         //
         // });
@@ -33,17 +33,17 @@ module.exports = {
             populate: [{path: 'organ.level1'}, {path: 'organ.level2'}]
         }).lean();
     },
-    put_index: function (data) {
+    u_put_index: function (data) {
         return Retire.findByIdAndUpdate(data._id, data);
     },
-    delete_index: function (data) {
+    u_delete_index: function (data) {
         return Retire.findByIdAndRemove(data._id, function () {
             return {msg: "ok"};
         });
     },
 
 
-    get_new: function (month, year) {
+    u_get_new: function (month, year) {
         if (!Number.parseInt(month) || !Number.parseInt(year)) {
             console.log("month or year not valid ");
             return [];

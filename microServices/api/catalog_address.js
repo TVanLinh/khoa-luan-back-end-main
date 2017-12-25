@@ -1,12 +1,12 @@
 const Address = require("../model/address");
 module.exports = {
-    post_index: function (address) {
-        console.log(address);
-        Address(address).save();
-        return "OK";
-    },
+    // post_index: function (address) {
+    //     console.log(address);
+    //     Address(address).save();
+    //     return "OK";
+    // },
 
-    get_index: function () {
+    u_get_index: function () {
 //         console.log("Address request");
 //         // Address.find({
 //         //     _id: "5a185304a8b1d2143466c43b", function (err, docs) {
@@ -33,50 +33,35 @@ module.exports = {
         //
         // });
 
-       // Address.insertMany(a);
+        // Address.insertMany(a);
 
 
-        return Address.find();
+        return Address.find().sort({"city.name": 1});
 
     },
-
-    get_test: function () {
-        return Address.find().then(result => {
-            let arrs = [];
-
-            for (let i = 0; i < result.length; i++) {
-                let temp = {
-                    city: {
-                        name: '',
-                        code: 0,
-                        districts: [
-                            {
-                                code: 0,
-                                name: '',
-                                guids: [
-                                    {
-                                        code: 0,
-                                        name: ''
-                                    }
-                                ]
-                            }
-                        ]
-                    }
+    u_post_index: function (data) {
+        console.log(JSON.stringify(data));
+        return Address.findOne({name: data['name']}).then(result => {
+            if (result && result.name) {
+                return {
+                    msg: "Tỉnh này đã tồn tại rồi "
                 };
-                temp.city.name = result[i].city.name;
-                temp.city.code = result[i].city.code;
-                temp.city.districts = [];
-                for (let j of result[i].districts) {
-                    let dTemp = {};
-                    dTemp['name'] = j.name;
-                    dTemp['code'] = j.code;
-                    dTemp.guids = j.guids;
-                    temp.city.districts.push(dTemp);
-                }
-                arrs.push(temp);
+            } else {
+                return Address(data).save();
             }
-            return arrs;
         });
+    },
+    u_put_index: function (data) {
+        console.log(JSON.stringify(data));
+        return Address.findByIdAndUpdate(data._id, data);
+    },
+    u_delete_index: function (id) {
+        return Address.findByIdAndRemove(id);
     }
+    // ,
+    // get_test: function () {
+    //     // return Address.find({}).select("-_id city.code city.name");
+    //     return Address.findOne({'city.name':'ademo'});
+    // }
 
 };

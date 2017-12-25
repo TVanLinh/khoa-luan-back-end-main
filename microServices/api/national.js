@@ -1,6 +1,6 @@
 const National = require('../model/national');
 module.exports = {
-    u_get_index: function () {
+    get_index: function () {
 
         let a = [{"name": " CHND Trung Hoa", "code": 1},
             {"name": " Ấn Độ", "code": 2},
