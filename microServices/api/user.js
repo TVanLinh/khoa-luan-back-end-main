@@ -375,7 +375,21 @@ module.exports = {
 
     },
 
-
+    get_roles:function (username) {
+        return User.findOne({username:username}).populate({
+            path:"roles",
+            match:{activated:true},
+            populate:[{
+                path:'frontends',
+                match:{activated:true},
+                select:"-_id title url"
+            },{
+                path:'backends',
+                match:{activated:true},
+                select:"-_id title "
+            }]
+        }).select("-_id roles")
+    }
 
 };
 
