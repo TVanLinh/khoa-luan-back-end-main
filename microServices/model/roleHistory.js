@@ -9,3 +9,5 @@ var RoleHistorySchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('RoleHistory', RoleHistorySchema);
+
+

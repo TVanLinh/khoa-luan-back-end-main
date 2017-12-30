@@ -2,9 +2,7 @@ const LeaveDepart = require('../model/leaveDepart');
 const User = require('../model/user');
 const Info = require('../model/info');
 module.exports = {
-    u_post_index: function (data) {
-
-        console.log(data);
+    post_index: function (data) {
         let temp = {};
         temp['numberDecide'] = data['numberDecide'];
         temp['dateDecide'] = data['dateDecide'];
@@ -91,7 +89,44 @@ module.exports = {
                         }
 
                         user['organ'] = data['unitTransfer'];
-                        return user.save();
+                        return Info.findOne({staffCode: user.username}).then(info => {
+                            let item = {
+                                level1: user.organ.level1.name,
+                                level2: user.organ.level2 ? user.organ.level2.name : '',
+                                now: true,
+                                dateFrom: data['dateTransfer'],
+                                dateEnd: null,
+                                position: '',
+                                job: ''
+                            };
+                            let hashInfo = true;
+
+                            if (!info) {
+                                hashInfo = false;
+                                info = {
+                                    staffCode: user.username,
+                                    process_work: []
+                                }
+                            }
+
+                            if (!Array.isArray(info.process_work)) {
+                                info.process_work = [];
+                            }
+                            for (let i = 0; i < info.process_work.length; i++) {
+                                info.process_work[i].now = false;
+                            }
+
+                            info.process_work.push(item);
+                            console.log("info " + info);
+                            if (!hashInfo) {
+                                Info(info).save();
+                            } else {
+                                info.save();
+                            }
+
+                            return user.save();
+                        });
+
                     }
 
                 });
@@ -109,14 +144,5 @@ module.exports = {
         return LeaveDepart.find().populate({
             path: 'user'
         }).lean();
-    },
-    get_test: function () {
-        return User.find({}).populate({
-            path: 'organ.level1'
-        }).populate({
-            path: 'organ.level2'
-        }).sort({index: -1}).then(array => {
-            return array;
-        });
     }
 };

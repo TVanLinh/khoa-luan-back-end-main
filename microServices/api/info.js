@@ -27,7 +27,10 @@ module.exports = {
         // Info.remove({staffCode: "appAdmin"}, function (err) {
         //
         // });
-        return Info.find();
+        return Info.find({},"_id accept staffCode");
+    },
+    get_accept: function (username) {
+        return Info.findOne({staffCode: username}, "-_id accept cv");
     },
     get_avartar: function (username) {
         return Info.findOne({staffCode: username}, "-_id cv.avatarUrl");

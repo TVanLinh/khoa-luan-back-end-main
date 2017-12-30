@@ -10,3 +10,4 @@ var FrontendSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Frontend', FrontendSchema);
+

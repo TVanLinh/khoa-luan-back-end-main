@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 
 //create Schema
 var infoShema = new mongoose.Schema({
-    accept: {type: Boolean, default: true},
     staffCode: String,
+    accept: {type: Boolean, default: false},
     cv: {
         fullName: String,
         nameOther: String,
@@ -154,7 +154,7 @@ var infoShema = new mongoose.Schema({
         credit: Number,
         organTeaching: String,
         yearTeaching: Number,
-        languageTeaching: String
+        languageTeaching: Number
     }],
     //danh hieu thi dua
     emulation_title: [{
@@ -272,3 +272,6 @@ var infoShema = new mongoose.Schema({
 
 //create model
 module.exports = mongoose.model('Info', infoShema);
+
+
+

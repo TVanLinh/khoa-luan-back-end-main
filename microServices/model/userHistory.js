@@ -9,3 +9,4 @@ var UserHistorySchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('UserHistory', UserHistorySchema);
+

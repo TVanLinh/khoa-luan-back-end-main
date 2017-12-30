@@ -6,7 +6,7 @@ module.exports = {
     //     return "OK";
     // },
 
-    u_get_index: function () {
+    get_index: function () {
 //         console.log("Address request");
 //         // Address.find({
 //         //     _id: "5a185304a8b1d2143466c43b", function (err, docs) {

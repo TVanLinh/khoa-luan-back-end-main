@@ -9,3 +9,5 @@ var bindJobShema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('BindJob', bindJobShema);
+
+

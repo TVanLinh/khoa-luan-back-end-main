@@ -16,10 +16,8 @@ var transporter = nodemailer.createTransport({
 });
 
 
-
-
 module.exports = {
-    u_get_index: function () {
+    get_index: function () {
         // User.remove({username: 'appAdmin'}, function (err) {
         //     console.log("delete user");
         // });
@@ -39,7 +37,7 @@ module.exports = {
         });
     },
 
-    get_role: function (username) {
+    u_get_role: function (username) {
         return User.findOne().populate({
             path: 'roles'
         }).select('-_id roles');
@@ -101,7 +99,7 @@ module.exports = {
                     return arr.filter(item => item.organ && item.organ.level1 && item.organ.level1._id == level1 && item.organ.level2 && item.organ.level2._id == level2);
 
                 } else if (level1) {
-                    return arr.filter(item => item.organ && item.organ.level1 && item.organ.level1._id == level1);
+                    return arr.filter(item => item.organ && item.username != null && item.organ.level1 && item.organ.level1._id == level1);
                 }
             }
             return [];
@@ -143,8 +141,8 @@ module.exports = {
         }).then(result => {
             if (Array.isArray(result)) {
                 for (let item of result) {
-                    console.log(item);
-                    if (item.organ != null && item.organ.level1 && item.organ.level1._id == id) {
+                    // console.log(item);
+                    if (item.username && item.organ != null && item.organ.level1 && item.organ.level1._id == id) {
                         arry.push(item);
                     }
                 }
@@ -375,18 +373,18 @@ module.exports = {
 
     },
 
-    get_roles:function (username) {
-        return User.findOne({username:username}).populate({
-            path:"roles",
-            match:{activated:true},
-            populate:[{
-                path:'frontends',
-                match:{activated:true},
-                select:"-_id title url"
-            },{
-                path:'backends',
-                match:{activated:true},
-                select:"-_id title "
+    u_get_roles: function (username) {
+        return User.findOne({username: username}).populate({
+            path: "roles",
+            match: {activated: true},
+            populate: [{
+                path: 'frontends',
+                match: {activated: true},
+                select: "-_id title url"
+            }, {
+                path: 'backends',
+                match: {activated: true},
+                select: "-_id title "
             }]
         }).select("-_id roles")
     }
